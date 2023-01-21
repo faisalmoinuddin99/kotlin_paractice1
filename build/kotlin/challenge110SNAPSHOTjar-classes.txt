@@ -1,0 +1,1 @@
+/home/kakashi/IntelliJ/playground/challenge1/build/classes/kotlin/main/MainKt.class:/home/kakashi/IntelliJ/playground/challenge1/build/classes/kotlin/main/RangeRegulator.class:/home/kakashi/IntelliJ/playground/challenge1/build/classes/kotlin/main/SmartDevice.class:/home/kakashi/IntelliJ/playground/challenge1/build/classes/kotlin/main/SmartTvDevice.class
