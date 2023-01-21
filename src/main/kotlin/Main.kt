@@ -1,3 +1,4 @@
+import javax.swing.AbstractButton
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -17,33 +18,34 @@ class SmartTvDevice(name: String, tvCategory: String, tvType: String) : SmartDev
     deviceName = name, deviceCategory = tvCategory, deviceType = tvType
 ) {
     private var speakerVolume by RangeRegulator(1, 0, 100)
-    private var channelNumber by RangeRegulator(2,1,200)
+    private var channelNumber by RangeRegulator(2, 1, 200)
 
-    fun increaseVolume(){
+    fun increaseVolume() {
         speakerVolume++
         println("Speaker volume increased to $speakerVolume.")
     }
 
-    fun decreaseVolume(){
+    fun decreaseVolume() {
         speakerVolume--
         println("Speaker volume decreased to $speakerVolume")
     }
 
-    fun nextChannel(){
+    fun nextChannel() {
         channelNumber++
         println("Next Channel number $channelNumber")
     }
 
-    fun previousChannel(){
-        channelNumber--
+    fun previousChannel() {
         println("Previous Channel $channelNumber")
+        channelNumber--
     }
 
-    fun details(){
-        println("Tv details - " +
-                "Model: $deviceName " +
-                "Volume: $speakerVolume " +
-                "Channel Number: $channelNumber "
+    fun details() {
+        println(
+            "Tv details - " +
+                    "Model: $deviceName " +
+                    "Volume: $speakerVolume " +
+                    "Channel Number: $channelNumber "
 
         )
     }
@@ -71,35 +73,49 @@ class RangeRegulator(
 
 }
 
+class SmartHome(private val smartTvDevice: SmartTvDevice) {
+
+    fun productDetails() {
+        smartTvDevice.details()
+    }
+
+    fun increaseTvVolume() {
+        smartTvDevice.increaseVolume()
+    }
+
+    fun decreaseTvVolume() {
+        smartTvDevice.decreaseVolume()
+    }
+
+    fun changeTvChannel(upButton: Boolean?, downButton: Boolean?) {
+
+
+        when {
+            upButton == true -> smartTvDevice.nextChannel()
+            downButton == true -> smartTvDevice.previousChannel()
+            else -> "Invalid button clicked"
+        }
+    }
+}
+
 fun main() {
-    val device1 = SmartTvDevice("Android Tv","Android","Digital")
+    val device1 : SmartHome = SmartHome(
+        SmartTvDevice("Android Tv", "Entertainment", "Android")
+    )
 
-
-    device1.details()
-    device1.increaseVolume()
-    device1.increaseVolume()
-    device1.increaseVolume()
-    device1.nextChannel()
-    device1.decreaseVolume()
-    device1.nextChannel()
-    device1.nextChannel()
-    device1.nextChannel()
-    device1.previousChannel()
-    device1.details()
-
+    device1.productDetails()
+    device1.increaseTvVolume()
+    device1.changeTvChannel(true,null)
+    device1.productDetails()
+    device1.changeTvChannel(null,true)
+    device1.productDetails()
 
 }
 
 /*
-Tv details - Model: Android Tv Volume: 1 Channel Number: 2
 Speaker volume increased to 2.
-Speaker volume increased to 3.
-Speaker volume increased to 4.
 Next Channel number 3
-Speaker volume decreased to 3
-Next Channel number 4
-Next Channel number 5
-Next Channel number 6
-Previous Channel 5
-Tv details - Model: Android Tv Volume: 3 Channel Number: 5
+Tv details - Model: Android Tv Volume: 2 Channel Number: 3
+Previous Channel 3
+Tv details - Model: Android Tv Volume: 2 Channel Number: 2
  */
